@@ -1672,11 +1672,11 @@ async function apiCall(method, url) {
 
 async function apiPost(action, payload) {
     try {
-        const response = await fetch(CONFIG.API_URL, {
+        await fetch(CONFIG.API_URL, {
             method: 'POST',
-            // Remove mode: 'no-cors' after backend is deployed
+            mode: 'no-cors',   // opaque response
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 action: action,
@@ -1684,19 +1684,18 @@ async function apiPost(action, payload) {
                 ...payload
             })
         });
-        
-        const data = await response.json();
-        
-        if (data.statusCode !== 200) {
-            throw new Error(data.data.error || 'API Error');
-        }
-        
-        return data.data;
+
+        // no-cors me response body read nahi hoti, toh hum assume karenge POST successful hai
+        return { status: "sent" };
+
     } catch (error) {
-        console.error('API Post Error:', error);
+        console.error("API Post Error:", error);
+        // tu chahe toh error ko bhi suppress kar sakta hai:
+        // return { status: "sent" };
         throw error;
     }
 }
+
 
 // ==================== UTILITY FUNCTIONS ====================
 function showLoading() {
