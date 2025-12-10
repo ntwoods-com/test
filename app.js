@@ -291,6 +291,14 @@ async function loadRequirements(filters = {}) {
         const response = await apiPost('getRequirements', { filters });
         allRequirements = response.requirements || [];
         
+        // If empty due to CORS, use localStorage mock data
+        if (allRequirements.length === 0) {
+            const mockReqs = localStorage.getItem('hrms_requirements');
+            if (mockReqs) {
+                allRequirements = JSON.parse(mockReqs);
+            }
+        }
+        
         renderRequirementsTable(allRequirements);
     } catch (error) {
         console.error('Error loading requirements:', error);
@@ -449,6 +457,14 @@ async function loadCandidates(filters = {}) {
     try {
         const response = await apiPost('getCandidates', { filters });
         allCandidates = response.candidates || [];
+        
+        // If empty due to CORS, use localStorage mock data
+        if (allCandidates.length === 0) {
+            const mockCands = localStorage.getItem('hrms_candidates');
+            if (mockCands) {
+                allCandidates = JSON.parse(mockCands);
+            }
+        }
         
         renderCandidatesTable(allCandidates);
     } catch (error) {
@@ -1137,7 +1153,8 @@ function setupEventListeners() {
         
         showLoading();
         try {
-            await apiPost('raiseRequirement', {
+            const reqData = {
+                id: 'REQ' + Date.now(),
                 jobRole: document.getElementById('reqJobRole').value,
                 jobTitle: document.getElementById('reqJobTitle').value,
                 rolesResponsibilities: document.getElementById('reqRolesResp').value,
@@ -1145,8 +1162,20 @@ function setupEventListeners() {
                 shift: document.getElementById('reqShift').value,
                 payScale: document.getElementById('reqPayScale').value,
                 perks: document.getElementById('reqPerks').value,
-                note: document.getElementById('reqNote').value
-            });
+                note: document.getElementById('reqNote').value,
+                raisedBy: currentUser.email,
+                raisedDate: new Date().toISOString(),
+                status: 'Raised'
+            };
+            
+            // Send to backend
+            await apiPost('raiseRequirement', reqData);
+            
+            // Also save to localStorage for display (due to CORS)
+            const existingReqs = localStorage.getItem('hrms_requirements');
+            const requirements = existingReqs ? JSON.parse(existingReqs) : [];
+            requirements.push(reqData);
+            localStorage.setItem('hrms_requirements', JSON.stringify(requirements));
             
             showToast('Requirement raised successfully!', 'success');
             closeModal('modalRaiseRequirement');
@@ -1221,11 +1250,27 @@ function setupEventListeners() {
             // Get requirement for job role
             const req = allRequirements.find(r => r.id === reqId);
             
+            // Add IDs and status to candidates
+            const candidatesWithIds = candidates.map(c => ({
+                ...c,
+                id: 'CAND' + Date.now() + Math.random().toString(36).substr(2, 5),
+                requirementId: reqId,
+                currentRole: req?.jobRole || 'Unknown',
+                status: 'Uploaded',
+                uploadDate: new Date().toISOString()
+            }));
+            
             await apiPost('uploadCandidates', {
                 requirementId: reqId,
                 jobRole: req?.jobRole || 'Unknown',
-                candidates: candidates
+                candidates: candidatesWithIds
             });
+            
+            // Also save to localStorage for display (due to CORS)
+            const existingCands = localStorage.getItem('hrms_candidates');
+            const allCands = existingCands ? JSON.parse(existingCands) : [];
+            allCands.push(...candidatesWithIds);
+            localStorage.setItem('hrms_candidates', JSON.stringify(allCands));
             
             showToast(`${candidates.length} candidates uploaded successfully!`, 'success');
             closeModal('modalUploadCandidates');
