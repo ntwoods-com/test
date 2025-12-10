@@ -1266,7 +1266,16 @@ function setupEventListeners() {
     document.getElementById('btnUploadCandidates')?.addEventListener('click', async () => {
         // Load requirements for dropdown
         const response = await apiPost('getRequirements', { filters: { status: 'Valid' } });
-        const requirements = response.requirements || [];
+        let requirements = response.requirements || [];
+        
+        // If empty due to CORS, use localStorage
+        if (requirements.length === 0) {
+            const mockReqs = localStorage.getItem('hrms_requirements');
+            if (mockReqs) {
+                const allReqs = JSON.parse(mockReqs);
+                requirements = allReqs.filter(r => r.status === 'Valid');
+            }
+        }
         
         const select = document.getElementById('uploadReqId');
         select.innerHTML = '<option value="">Select Requirement</option>';
