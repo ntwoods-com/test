@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Assessment - NT Woods</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-container" style="max-width: 600px;">
+            <div class="login-card">
+                <div class="login-header"><h1>Initial Assessment</h1><p>NT Woods Pvt. Ltd.</p></div>
+                <div class="login-body">
+                    <form id="candidateForm">
+                        <input type="hidden" id="token">
+                        <div class="form-group"><label>Full Name</label><input type="text" id="candName" class="form-control" required></div>
+                        <div class="form-group"><label>Applying For</label><input type="text" id="candPost" class="form-control" required></div>
+                        <div class="form-group"><label>Source</label><select id="candSource" class="form-control" required><option value="">Select</option><option value="Naukri">Naukri</option><option value="Indeed">Indeed</option><option value="Other">Other</option></select></div>
+                        <hr style="margin:20px 0;"><h3>Aptitude Test</h3><div id="randomQuestions"></div>
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top:20px;">Submit Assessment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./config.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        document.getElementById('token').value = token;
+
+        // Generate Math Questions
+        const questions = [
+            {q: '75% of 200', a: '150'}, {q: 'Half of 230', a: '115'}, 
+            {q: 'Convert 5m to cm', a: '500'}, {q: '120% of 200', a: '240'}
+        ];
+        const shuffled = questions.sort(() => 0.5 - Math.random()).slice(0, 3);
+        const container = document.getElementById('randomQuestions');
+        shuffled.forEach((q, i) => {
+            container.innerHTML += `<div class="form-group"><label>Q${i+1}: ${q.q}</label><input type="text" class="form-control" name="q_${i}" placeholder="Answer" required></div>`;
+        });
+
+        document.getElementById('candidateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                action: 'submitInitialPaper',
+                token: token,
+                name: document.getElementById('candName').value,
+                answers: 'Submitted' 
+            };
+            
+            // Use no-cors mode
+            await fetch(CONFIG.API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(data)
+            });
+            
+            alert('Assessment Submitted Successfully!');
+            document.body.innerHTML = '<h1 style="text-align:center;margin-top:50px;color:green;">Submitted Successfully</h1>';
+        });
+    </script>
+</body>
+</html>
