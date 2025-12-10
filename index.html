@@ -9,13 +9,11 @@
     <meta name="google-signin-client_id" content="1029752642188-ku0k9krbdbsttj9br238glq8h4k5loj3.apps.googleusercontent.com">
 </head>
 <body>
-    <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="spinner"></div>
         <p>Loading...</p>
     </div>
 
-    <!-- Login Page -->
     <div id="loginPage" class="login-page">
         <div class="login-container">
             <div class="login-card">
@@ -38,9 +36,7 @@
         </div>
     </div>
 
-    <!-- Main Application -->
     <div id="mainApp" class="main-app" style="display: none;">
-        <!-- Navigation Bar -->
         <nav class="navbar">
             <div class="navbar-brand">
                 <h1>HRMS</h1>
@@ -52,746 +48,260 @@
             </div>
         </nav>
 
-        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <ul class="sidebar-menu">
-                <!-- Dashboard -->
-                <li class="menu-item" data-module="dashboard" data-permission="view">
-                    <span class="menu-icon">📊</span>
-                    <span class="menu-text">Dashboard</span>
-                </li>
-
-                <!-- Requirements Module -->
-                <li class="menu-item" data-module="requirements" data-permission="view">
-                    <span class="menu-icon">📝</span>
-                    <span class="menu-text">Requirements</span>
-                </li>
-
-                <!-- Candidates Module -->
-                <li class="menu-item" data-module="candidates" data-permission="view">
-                    <span class="menu-icon">👥</span>
-                    <span class="menu-text">Candidates</span>
-                </li>
-
-                <!-- Shortlisting Module -->
-                <li class="menu-item" data-module="shortlisting" data-permission="view">
-                    <span class="menu-icon">✅</span>
-                    <span class="menu-text">Shortlisting</span>
-                </li>
-
-                <!-- Telephonic Screening -->
-                <li class="menu-item" data-module="telephonic" data-permission="view">
-                    <span class="menu-icon">📞</span>
-                    <span class="menu-text">Telephonic</span>
-                </li>
-
-                <!-- Owner Review -->
-                <li class="menu-item" data-module="owner-review" data-permission="view">
-                    <span class="menu-icon">👔</span>
-                    <span class="menu-text">Owner Review</span>
-                </li>
-
-                <!-- Schedule Interviews -->
-                <li class="menu-item" data-module="schedule" data-permission="view">
-                    <span class="menu-icon">📅</span>
-                    <span class="menu-text">Schedule</span>
-                </li>
-
-                <!-- Walk-ins -->
-                <li class="menu-item" data-module="walkins" data-permission="view">
-                    <span class="menu-icon">🚶</span>
-                    <span class="menu-text">Walk-ins</span>
-                </li>
-
-                <!-- Job Templates (Admin only) -->
-                <li class="menu-item" data-module="templates" data-permission="view">
-                    <span class="menu-icon">📄</span>
-                    <span class="menu-text">Job Templates</span>
-                </li>
-
-                <!-- User Management (Admin only) -->
-                <li class="menu-item" data-module="users" data-permission="view">
-                    <span class="menu-icon">👤</span>
-                    <span class="menu-text">Users</span>
-                </li>
-
-                <!-- Permissions (Admin only) -->
-                <li class="menu-item" data-module="permissions" data-permission="view">
-                    <span class="menu-icon">🔒</span>
-                    <span class="menu-text">Permissions</span>
-                </li>
-
-                <!-- Reports -->
-                <li class="menu-item" data-module="reports" data-permission="view">
-                    <span class="menu-icon">📈</span>
-                    <span class="menu-text">Reports</span>
-                </li>
+                <li class="menu-item active" data-module="dashboard"><span class="menu-icon">📊</span><span class="menu-text">Dashboard</span></li>
+                <li class="menu-item" data-module="requirements"><span class="menu-icon">📝</span><span class="menu-text">Requirements</span></li>
+                <li class="menu-item" data-module="candidates"><span class="menu-icon">👥</span><span class="menu-text">Candidates</span></li>
+                <li class="menu-item" data-module="shortlisting"><span class="menu-icon">✅</span><span class="menu-text">Shortlisting</span></li>
+                <li class="menu-item" data-module="telephonic"><span class="menu-icon">📞</span><span class="menu-text">Telephonic</span></li>
+                <li class="menu-item" data-module="owner-review"><span class="menu-icon">👔</span><span class="menu-text">Owner Review</span></li>
+                <li class="menu-item" data-module="schedule"><span class="menu-icon">📅</span><span class="menu-text">Schedule</span></li>
+                <li class="menu-item" data-module="walkins"><span class="menu-icon">🚶</span><span class="menu-text">Walk-ins</span></li>
+                <li class="menu-item" data-module="templates"><span class="menu-icon">📄</span><span class="menu-text">Job Templates</span></li>
+                <li class="menu-item" data-module="users"><span class="menu-icon">👤</span><span class="menu-text">Users</span></li>
+                <li class="menu-item" data-module="permissions"><span class="menu-icon">🔒</span><span class="menu-text">Permissions</span></li>
+                <li class="menu-item" data-module="reports"><span class="menu-icon">📈</span><span class="menu-text">Reports</span></li>
             </ul>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Dashboard Module -->
             <div id="dashboard" class="module-content active">
-                <div class="module-header">
-                    <h2>Dashboard</h2>
-                </div>
+                <div class="module-header"><h2>Dashboard</h2></div>
                 <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <h3>Total Requirements</h3>
-                        <p class="stat-value" id="statTotalReq">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Pending Review</h3>
-                        <p class="stat-value" id="statPendingReq">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Candidates</h3>
-                        <p class="stat-value" id="statTotalCand">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Shortlisted</h3>
-                        <p class="stat-value" id="statShortlisted">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Interviewed</h3>
-                        <p class="stat-value" id="statInterviewed">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Rejected</h3>
-                        <p class="stat-value" id="statRejected">0</p>
-                    </div>
+                    <div class="stat-card"><h3>Total Requirements</h3><p class="stat-value" id="statTotalReq">0</p></div>
+                    <div class="stat-card"><h3>Pending Review</h3><p class="stat-value" id="statPendingReq">0</p></div>
+                    <div class="stat-card"><h3>Total Candidates</h3><p class="stat-value" id="statTotalCand">0</p></div>
+                    <div class="stat-card"><h3>Shortlisted</h3><p class="stat-value" id="statShortlisted">0</p></div>
+                    <div class="stat-card"><h3>Interviewed</h3><p class="stat-value" id="statInterviewed">0</p></div>
+                    <div class="stat-card"><h3>Rejected</h3><p class="stat-value" id="statRejected">0</p></div>
                 </div>
             </div>
 
-            <!-- Requirements Module -->
             <div id="requirements" class="module-content">
-                <div class="module-header">
-                    <h2>Requirements Management</h2>
-                    <button id="btnRaiseRequirement" class="btn-primary" data-permission="create">+ Raise Requirement</button>
-                </div>
-                
+                <div class="module-header"><h2>Requirements Management</h2><button id="btnRaiseRequirement" class="btn-primary">+ Raise Requirement</button></div>
                 <div class="filter-section">
-                    <select id="filterReqStatus" class="filter-select">
-                        <option value="">All Status</option>
-                        <option value="Pending Review">Pending Review</option>
-                        <option value="Valid">Valid</option>
-                        <option value="Sent Back">Sent Back</option>
-                    </select>
+                    <select id="filterReqStatus" class="filter-select"><option value="">All Status</option><option value="Pending Review">Pending Review</option><option value="Valid">Valid</option><option value="Sent Back">Sent Back</option></select>
                     <button id="btnFilterReq" class="btn-secondary">Apply Filter</button>
                 </div>
-
                 <div class="table-container">
                     <table class="data-table" id="requirementsTable">
-                        <thead>
-                            <tr>
-                                <th>Req ID</th>
-                                <th>Job Role</th>
-                                <th>Job Title</th>
-                                <th>Shift</th>
-                                <th>Pay Scale</th>
-                                <th>Status</th>
-                                <th>Raised By</th>
-                                <th>Raised Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="requirementsTableBody">
-                            <!-- Data will be populated here -->
-                        </tbody>
+                        <thead><tr><th>Req ID</th><th>Job Role</th><th>Job Title</th><th>Shift</th><th>Pay Scale</th><th>Status</th><th>Raised By</th><th>Raised Date</th><th>Actions</th></tr></thead>
+                        <tbody id="requirementsTableBody"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Candidates Module -->
             <div id="candidates" class="module-content">
-                <div class="module-header">
-                    <h2>Candidate Management</h2>
-                    <button id="btnUploadCandidates" class="btn-primary" data-permission="create">+ Upload Candidates</button>
-                </div>
-
+                <div class="module-header"><h2>Candidate Management</h2><button id="btnUploadCandidates" class="btn-primary">+ Upload Candidates</button></div>
                 <div class="filter-section">
                     <input type="text" id="filterReqId" class="filter-input" placeholder="Requirement ID">
-                    <select id="filterCandStatus" class="filter-select">
-                        <option value="">All Status</option>
-                        <option value="Uploaded">Uploaded</option>
-                        <option value="Shortlisted">Shortlisted</option>
-                        <option value="Rejected">Rejected</option>
-                    </select>
+                    <select id="filterCandStatus" class="filter-select"><option value="">All Status</option><option value="Uploaded">Uploaded</option><option value="Shortlisted">Shortlisted</option><option value="Rejected">Rejected</option></select>
                     <button id="btnFilterCand" class="btn-secondary">Apply Filter</button>
                 </div>
-
                 <div class="table-container">
                     <table class="data-table" id="candidatesTable">
-                        <thead>
-                            <tr>
-                                <th>Candidate ID</th>
-                                <th>Name</th>
-                                <th>Mobile</th>
-                                <th>Source</th>
-                                <th>Job Role</th>
-                                <th>Status</th>
-                                <th>CV</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="candidatesTableBody">
-                            <!-- Data will be populated here -->
-                        </tbody>
+                        <thead><tr><th>Candidate ID</th><th>Name</th><th>Mobile</th><th>Source</th><th>Job Role</th><th>Status</th><th>CV</th><th>Actions</th></tr></thead>
+                        <tbody id="candidatesTableBody"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Shortlisting Module -->
             <div id="shortlisting" class="module-content">
-                <div class="module-header">
-                    <h2>Shortlisting</h2>
-                </div>
-                <div class="candidates-grid" id="shortlistingGrid">
-                    <!-- Candidate cards will be populated here -->
-                </div>
+                <div class="module-header"><h2>Shortlisting</h2></div>
+                <div class="candidates-grid" id="shortlistingGrid"></div>
             </div>
 
-            <!-- Telephonic Module -->
             <div id="telephonic" class="module-content">
-                <div class="module-header">
-                    <h2>Telephonic Screening</h2>
-                </div>
-                <div class="candidates-list" id="telephonicList">
-                    <!-- Candidates will be populated here -->
-                </div>
+                <div class="module-header"><h2>Telephonic Screening</h2></div>
+                <div class="candidates-list" id="telephonicList"></div>
             </div>
 
-            <!-- Owner Review Module -->
             <div id="owner-review" class="module-content">
-                <div class="module-header">
-                    <h2>Owner Review</h2>
-                </div>
-                <div class="candidates-list" id="ownerReviewList">
-                    <!-- Candidates will be populated here -->
-                </div>
+                <div class="module-header"><h2>Owner Review</h2></div>
+                <div class="candidates-list" id="ownerReviewList"></div>
             </div>
 
-            <!-- Schedule Module -->
             <div id="schedule" class="module-content">
-                <div class="module-header">
-                    <h2>Schedule Interviews</h2>
-                </div>
-                <div class="candidates-list" id="scheduleList">
-                    <!-- Candidates will be populated here -->
-                </div>
+                <div class="module-header"><h2>Schedule Interviews</h2></div>
+                <div class="candidates-list" id="scheduleList"></div>
             </div>
 
-            <!-- Walk-ins Module -->
             <div id="walkins" class="module-content">
-                <div class="module-header">
-                    <h2>Walk-ins</h2>
-                    <div class="filter-section">
-                        <button id="btnFilterToday" class="btn-secondary">Today's Interviews</button>
-                    </div>
-                </div>
-                <div class="candidates-list" id="walkinsList">
-                    <!-- Candidates will be populated here -->
-                </div>
+                <div class="module-header"><h2>Walk-ins</h2><div class="filter-section"><button id="btnFilterToday" class="btn-secondary">Today's Interviews</button></div></div>
+                <div class="candidates-list" id="walkinsList"></div>
             </div>
 
-            <!-- Job Templates Module -->
             <div id="templates" class="module-content">
-                <div class="module-header">
-                    <h2>Job Templates</h2>
-                    <button id="btnAddTemplate" class="btn-primary" data-permission="create">+ Add Template</button>
-                </div>
-                <div class="table-container">
-                    <table class="data-table" id="templatesTable">
-                        <thead>
-                            <tr>
-                                <th>Job Role</th>
-                                <th>Job Title</th>
-                                <th>Shift</th>
-                                <th>Pay Scale</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="templatesTableBody">
-                            <!-- Data will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
+                <div class="module-header"><h2>Job Templates</h2><button id="btnAddTemplate" class="btn-primary">+ Add Template</button></div>
+                <div class="table-container"><table class="data-table"><thead><tr><th>Job Role</th><th>Job Title</th><th>Shift</th><th>Pay Scale</th><th>Actions</th></tr></thead><tbody id="templatesTableBody"></tbody></table></div>
             </div>
 
-            <!-- Users Module -->
             <div id="users" class="module-content">
-                <div class="module-header">
-                    <h2>User Management</h2>
-                    <button id="btnAddUser" class="btn-primary" data-permission="create">+ Add User</button>
-                </div>
-                <div class="table-container">
-                    <table class="data-table" id="usersTable">
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTableBody">
-                            <!-- Data will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
+                <div class="module-header"><h2>User Management</h2><button id="btnAddUser" class="btn-primary">+ Add User</button></div>
+                <div class="table-container"><table class="data-table"><thead><tr><th>User ID</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTableBody"></tbody></table></div>
             </div>
 
-            <!-- Permissions Module -->
             <div id="permissions" class="module-content">
-                <div class="module-header">
-                    <h2>Permissions Management</h2>
-                </div>
-                <div class="permissions-grid" id="permissionsGrid">
-                    <!-- Permissions matrix will be populated here -->
-                </div>
+                <div class="module-header"><h2>Permissions Management</h2></div>
+                <div class="permissions-grid" id="permissionsGrid"></div>
             </div>
 
-            <!-- Reports Module -->
             <div id="reports" class="module-content">
-                <div class="module-header">
-                    <h2>Reports & Analytics</h2>
-                </div>
-                <div class="reports-container">
-                    <div class="report-section">
-                        <h3>Audit Log</h3>
-                        <div class="table-container">
-                            <table class="data-table" id="auditLogTable">
-                                <thead>
-                                    <tr>
-                                        <th>Timestamp</th>
-                                        <th>User</th>
-                                        <th>Action</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="auditLogTableBody">
-                                    <!-- Data will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <div class="module-header"><h2>Reports & Analytics</h2></div>
+                <div class="reports-container"><div class="report-section"><h3>Audit Log</h3><div class="table-container"><table class="data-table"><thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Description</th></tr></thead><tbody id="auditLogTableBody"></tbody></table></div></div></div>
             </div>
         </main>
     </div>
 
-    <!-- Modal: Raise Requirement -->
     <div id="modalRaiseRequirement" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Raise New Requirement</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>Raise New Requirement</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
                 <form id="formRaiseRequirement">
-                    <div class="form-group">
-                        <label>Job Role</label>
-                        <select id="reqJobRole" class="form-control" required>
-                            <option value="">Select Job Role</option>
-                            <option value="CRM">CRM</option>
-                            <option value="CCE">CCE</option>
-                            <option value="PC">PC</option>
-                            <option value="Jr. Accountant">Jr. Accountant</option>
-                            <option value="Sr. Accountant">Sr. Accountant</option>
-                            <option value="MIS">MIS</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Job Title</label>
-                        <input type="text" id="reqJobTitle" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Roles & Responsibilities</label>
-                        <textarea id="reqRolesResp" class="form-control" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Must Have Skills</label>
-                        <textarea id="reqMustHave" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Shift</label>
-                        <select id="reqShift" class="form-control" required>
-                            <option value="">Select Shift</option>
-                            <option value="Day">Day</option>
-                            <option value="Night">Night</option>
-                            <option value="Rotational">Rotational</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Pay Scale</label>
-                        <input type="text" id="reqPayScale" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Perks</label>
-                        <textarea id="reqPerks" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Note</label>
-                        <textarea id="reqNote" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Submit Requirement</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
+                    <div class="form-group"><label>Job Role</label><select id="reqJobRole" class="form-control" required><option value="">Select Job Role</option><option value="CRM">CRM</option><option value="CCE">CCE</option><option value="PC">PC</option><option value="Jr. Accountant">Jr. Accountant</option><option value="Sr. Accountant">Sr. Accountant</option><option value="MIS">MIS</option><option value="Other">Other</option></select></div>
+                    <div class="form-group"><label>Job Title</label><input type="text" id="reqJobTitle" class="form-control" required></div>
+                    <div class="form-group"><label>Roles & Responsibilities</label><textarea id="reqRolesResp" class="form-control" rows="4" required></textarea></div>
+                    <div class="form-group"><label>Must Have Skills</label><textarea id="reqMustHave" class="form-control" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Shift</label><select id="reqShift" class="form-control" required><option value="">Select Shift</option><option value="Day">Day</option><option value="Night">Night</option><option value="Rotational">Rotational</option></select></div>
+                    <div class="form-group"><label>Pay Scale</label><input type="text" id="reqPayScale" class="form-control" required></div>
+                    <div class="form-group"><label>Perks</label><textarea id="reqPerks" class="form-control" rows="2"></textarea></div>
+                    <div class="form-group"><label>Note</label><textarea id="reqNote" class="form-control" rows="2"></textarea></div>
+                    <div class="form-actions"><button type="submit" class="btn-primary">Submit Requirement</button><button type="button" class="btn-secondary modal-close">Cancel</button></div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Upload Candidates -->
     <div id="modalUploadCandidates" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Upload Candidates</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>Upload Candidates</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
                 <form id="formUploadCandidates">
-                    <div class="form-group">
-                        <label>Requirement ID</label>
-                        <select id="uploadReqId" class="form-control" required>
-                            <option value="">Select Requirement</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload CVs (Multiple files)</label>
-                        <input type="file" id="uploadCVs" class="form-control" multiple accept=".pdf,.doc,.docx" required>
-                        <p class="form-help">File naming format: CandidateName_MobileNo_Source.pdf</p>
-                    </div>
-                    <div id="uploadProgress" class="upload-progress" style="display: none;">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="uploadProgressFill"></div>
-                        </div>
-                        <p id="uploadProgressText">Uploading 0 of 0...</p>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Upload Candidates</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
+                    <div class="form-group"><label>Requirement ID</label><select id="uploadReqId" class="form-control" required><option value="">Select Requirement</option></select></div>
+                    <div class="form-group"><label>Upload CVs</label><input type="file" id="uploadCVs" class="form-control" multiple accept=".pdf,.doc,.docx" required><p class="form-help">Format: CandidateName_MobileNo_Source.pdf</p></div>
+                    <div id="uploadProgress" class="upload-progress" style="display: none;"><div class="progress-bar"><div class="progress-fill" id="uploadProgressFill"></div></div><p id="uploadProgressText">Uploading 0 of 0...</p></div>
+                    <div class="form-actions"><button type="submit" class="btn-primary">Upload Candidates</button><button type="button" class="btn-secondary modal-close">Cancel</button></div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal: View/Edit Requirement -->
     <div id="modalViewRequirement" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Requirement Details</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>Requirement Details</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
-                <div id="requirementDetails">
-                    <!-- Details will be populated dynamically -->
+                <div id="requirementDetails"></div>
+                <div id="jobPostingSection" class="job-posting-section" style="display:none; margin-top:20px; border-top:1px dashed #ccc; padding-top:15px;">
+                    <h3>Job Posting Proof</h3>
+                    <div class="form-group">
+                        <label>Select Portal</label>
+                        <select id="postingPortal" class="form-control">
+                            <option value="Naukri">Naukri.com</option>
+                            <option value="Indeed">Indeed</option>
+                            <option value="WorkIndia">Work India</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Screenshot</label>
+                        <input type="file" id="postingScreenshot" class="form-control" accept="image/*">
+                    </div>
+                    <button id="btnUploadProof" class="btn-primary" style="width:100%">Upload Proof</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Telephonic Screening -->
     <div id="modalTelephonic" class="modal">
         <div class="modal-content modal-large">
-            <div class="modal-header">
-                <h2>Telephonic Screening</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>Telephonic Screening</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
                 <form id="formTelephonic">
-                    <input type="hidden" id="telephonicCandidateId">
-                    <div class="candidate-info" id="telephonicCandidateInfo">
-                        <!-- Candidate info will be shown here -->
-                    </div>
-                    <div class="form-group">
-                        <label>Family Background Check</label>
-                        <textarea id="telephonicFamily" class="form-control" rows="3" placeholder="Family members and their occupations"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Communication Skills (out of 10)</label>
-                        <input type="number" id="telephonicComm" class="form-control" min="0" max="10" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Professional Experience (out of 10)</label>
-                        <input type="number" id="telephonicExp" class="form-control" min="0" max="10" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select id="telephonicStatus" class="form-control" required>
-                            <option value="">Select Status</option>
-                            <option value="Recommended for Owners">Recommended for Owners</option>
-                            <option value="Switched Off">Switched Off</option>
-                            <option value="No Answer">No Answer</option>
-                            <option value="No Incoming">No Incoming</option>
-                            <option value="Reject">Reject</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="telephonicReasonGroup" style="display: none;">
-                        <label>Rejection Reason</label>
-                        <textarea id="telephonicReason" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Submit</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
+                    <input type="hidden" id="telephonicCandidateId"><div class="candidate-info" id="telephonicCandidateInfo"></div>
+                    <div class="form-group"><label>Family Background Check</label><textarea id="telephonicFamily" class="form-control" rows="3"></textarea></div>
+                    <div class="form-group"><label>Comm. Skills (0-10)</label><input type="number" id="telephonicComm" class="form-control" min="0" max="10" required></div>
+                    <div class="form-group"><label>Prof. Experience (0-10)</label><input type="number" id="telephonicExp" class="form-control" min="0" max="10" required></div>
+                    <div class="form-group"><label>Status</label><select id="telephonicStatus" class="form-control" required><option value="">Select</option><option value="Recommended for Owners">Recommended</option><option value="Switched Off">Switched Off</option><option value="No Answer">No Answer</option><option value="Reject">Reject</option></select></div>
+                    <div class="form-group" id="telephonicReasonGroup" style="display: none;"><label>Rejection Reason</label><textarea id="telephonicReason" class="form-control" rows="2"></textarea></div>
+                    <div class="form-actions"><button type="submit" class="btn-primary">Submit</button><button type="button" class="btn-secondary modal-close">Cancel</button></div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Owner Review -->
     <div id="modalOwnerReview" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Owner Review</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>Owner Review</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
                 <form id="formOwnerReview">
-                    <input type="hidden" id="ownerCandidateId">
-                    <div class="candidate-info" id="ownerCandidateInfo">
-                        <!-- Candidate info will be shown here -->
-                    </div>
-                    <div class="form-group">
-                        <label>Owner's Decision</label>
-                        <select id="ownerDecision" class="form-control" required>
-                            <option value="">Select Decision</option>
-                            <option value="Approved">Approved for Walk-in</option>
-                            <option value="Hold">Hold</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="ownerScheduleGroup" style="display: none;">
-                        <label>Interview Date</label>
-                        <input type="date" id="ownerInterviewDate" class="form-control">
-                    </div>
-                    <div class="form-group" id="ownerTimeGroup" style="display: none;">
-                        <label>Interview Time</label>
-                        <input type="time" id="ownerInterviewTime" class="form-control">
-                    </div>
-                    <div class="form-group" id="ownerReasonGroup" style="display: none;">
-                        <label>Reason/Remark</label>
-                        <textarea id="ownerReason" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Submit</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
+                    <input type="hidden" id="ownerCandidateId"><div class="candidate-info" id="ownerCandidateInfo"></div>
+                    <div class="form-group"><label>Decision</label><select id="ownerDecision" class="form-control" required><option value="">Select</option><option value="Approved">Approved</option><option value="Hold">Hold</option><option value="Rejected">Rejected</option></select></div>
+                    <div id="ownerScheduleGroup" style="display: none;"><div class="form-group"><label>Date</label><input type="date" id="ownerInterviewDate" class="form-control"></div><div class="form-group"><label>Time</label><input type="time" id="ownerInterviewTime" class="form-control"></div></div>
+                    <div class="form-group" id="ownerReasonGroup" style="display: none;"><label>Reason</label><textarea id="ownerReason" class="form-control" rows="2"></textarea></div>
+                    <div class="form-actions"><button type="submit" class="btn-primary">Submit</button><button type="button" class="btn-secondary modal-close">Cancel</button></div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Schedule Interview -->
     <div id="modalScheduleInterview" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Schedule Interview</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>Schedule Interview</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
                 <form id="formScheduleInterview">
-                    <input type="hidden" id="scheduleCandidateId">
-                    <div class="candidate-info" id="scheduleCandidateInfo">
-                        <!-- Candidate info will be shown here -->
-                    </div>
-                    <div class="form-group">
-                        <label>Call Status</label>
-                        <select id="scheduleCallStatus" class="form-control" required>
-                            <option value="">Select Status</option>
-                            <option value="Informed">Informed</option>
-                            <option value="Not Picked">Not Picked</option>
-                            <option value="Hold">Hold - Timing Issue</option>
-                            <option value="Reject">Reject</option>
-                        </select>
-                    </div>
-                    <div class="message-section" id="interviewMessageSection" style="display: none;">
-                        <label>Interview Message</label>
-                        <textarea id="interviewMessage" class="form-control" rows="8" readonly></textarea>
-                        <button type="button" id="btnCopyMessage" class="btn-secondary">Copy Message</button>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Submit</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
+                    <input type="hidden" id="scheduleCandidateId"><div class="candidate-info" id="scheduleCandidateInfo"></div>
+                    <div class="form-group"><label>Call Status</label><select id="scheduleCallStatus" class="form-control" required><option value="">Select</option><option value="Informed">Informed</option><option value="Not Picked">Not Picked</option><option value="Reject">Reject</option></select></div>
+                    <div class="message-section" id="interviewMessageSection" style="display: none;"><label>Interview Message</label><textarea id="interviewMessage" class="form-control" rows="8" readonly></textarea><button type="button" id="btnCopyMessage" class="btn-secondary">Copy Message</button></div>
+                    <div class="form-actions"><button type="submit" class="btn-primary">Submit</button><button type="button" class="btn-secondary modal-close">Cancel</button></div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Walk-in Actions -->
-    <div id="modalWalkin" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Walk-in Actions</h2>
-                <span class="modal-close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div id="walkinActions">
-                    <!-- Actions will be populated here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: HR Interview -->
     <div id="modalHRInterview" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>HR Interview</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>HR Interview</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
                 <form id="formHRInterview">
-                    <input type="hidden" id="hrInterviewCandidateId">
-                    <div class="candidate-info" id="hrInterviewCandidateInfo">
-                        <!-- Candidate info will be shown here -->
-                    </div>
-                    <div class="form-group">
-                        <label>HR Interview Marks (out of 10)</label>
-                        <input type="number" id="hrInterviewMarks" class="form-control" min="0" max="10" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Remarks</label>
-                        <textarea id="hrInterviewRemarks" class="form-control" rows="3"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Submit</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
+                    <input type="hidden" id="hrInterviewCandidateId"><div class="candidate-info" id="hrInterviewCandidateInfo"></div>
+                    <div class="form-group"><label>Marks (0-10)</label><input type="number" id="hrInterviewMarks" class="form-control" min="0" max="10" required></div>
+                    <div class="form-group"><label>Remarks</label><textarea id="hrInterviewRemarks" class="form-control" rows="3"></textarea></div>
+                    <div class="form-actions"><button type="submit" class="btn-primary">Submit</button><button type="button" class="btn-secondary modal-close">Cancel</button></div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Record Test Marks -->
     <div id="modalTestMarks" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Record Test Marks</h2>
-                <span class="modal-close">&times;</span>
-            </div>
+            <div class="modal-header"><h2>Record Test Marks</h2><span class="modal-close">&times;</span></div>
             <div class="modal-body">
                 <form id="formTestMarks">
-                    <input type="hidden" id="testCandidateId">
-                    <div class="candidate-info" id="testCandidateInfo">
-                        <!-- Candidate info will be shown here -->
-                    </div>
-                    <div class="form-group">
-                        <label>Test Type</label>
-                        <select id="testType" class="form-control" required>
-                            <option value="">Select Test Type</option>
-                            <option value="excel">Excel Test</option>
-                            <option value="tally">Tally Test</option>
-                            <option value="voice">Voice Test</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Marks (out of 10)</label>
-                        <input type="number" id="testMarksValue" class="form-control" min="0" max="10" required>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Submit</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
+                    <input type="hidden" id="testCandidateId"><div class="candidate-info" id="testCandidateInfo"></div>
+                    <div class="form-group"><label>Test Type</label><select id="testType" class="form-control" required></select></div>
+                    <div class="form-group"><label>Marks (0-10)</label><input type="number" id="testMarksValue" class="form-control" min="0" max="10" required></div>
+                    <div class="form-actions"><button type="submit" class="btn-primary">Submit</button><button type="button" class="btn-secondary modal-close">Cancel</button></div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Add/Edit User -->
     <div id="modalUser" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalUserTitle">Add User</h2>
-                <span class="modal-close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="formUser">
-                    <input type="hidden" id="userId">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" id="userName" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="userEmail" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <select id="userRoleSelect" class="form-control" required>
-                            <option value="">Select Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="ea">EA</option>
-                            <option value="hr">HR</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Save User</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
-                </form>
-            </div>
+            <div class="modal-header"><h2 id="modalUserTitle">Add User</h2><span class="modal-close">&times;</span></div>
+            <div class="modal-body"><form id="formUser"><input type="hidden" id="userId"><div class="form-group"><label>Name</label><input type="text" id="userNameInput" class="form-control" required></div><div class="form-group"><label>Email</label><input type="email" id="userEmail" class="form-control" required></div><div class="form-group"><label>Role</label><select id="userRoleSelect" class="form-control" required><option value="">Select Role</option><option value="admin">Admin</option><option value="ea">EA</option><option value="hr">HR</option></select></div><div class="form-actions"><button type="submit" class="btn-primary">Save User</button><button type="button" class="btn-secondary modal-close">Cancel</button></div></form></div>
         </div>
     </div>
 
-    <!-- Modal: Add/Edit Template -->
     <div id="modalTemplate" class="modal">
         <div class="modal-content modal-large">
-            <div class="modal-header">
-                <h2 id="modalTemplateTitle">Add Job Template</h2>
-                <span class="modal-close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="formTemplate">
-                    <div class="form-group">
-                        <label>Job Role</label>
-                        <input type="text" id="templateJobRole" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Job Title</label>
-                        <input type="text" id="templateJobTitle" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Roles & Responsibilities</label>
-                        <textarea id="templateRolesResp" class="form-control" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Must Have Skills</label>
-                        <textarea id="templateMustHave" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Shift</label>
-                        <input type="text" id="templateShift" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Pay Scale</label>
-                        <input type="text" id="templatePayScale" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Perks</label>
-                        <textarea id="templatePerks" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Save Template</button>
-                        <button type="button" class="btn-secondary modal-close">Cancel</button>
-                    </div>
-                </form>
-            </div>
+            <div class="modal-header"><h2 id="modalTemplateTitle">Add Job Template</h2><span class="modal-close">&times;</span></div>
+            <div class="modal-body"><form id="formTemplate"><div class="form-group"><label>Job Role</label><input type="text" id="templateJobRole" class="form-control" required></div><div class="form-group"><label>Job Title</label><input type="text" id="templateJobTitle" class="form-control" required></div><div class="form-group"><label>Roles & Resp</label><textarea id="templateRolesResp" class="form-control" rows="4"></textarea></div><div class="form-group"><label>Skills</label><textarea id="templateMustHave" class="form-control" rows="3"></textarea></div><div class="form-group"><label>Shift</label><input type="text" id="templateShift" class="form-control"></div><div class="form-group"><label>Pay Scale</label><input type="text" id="templatePayScale" class="form-control"></div><div class="form-group"><label>Perks</label><textarea id="templatePerks" class="form-control" rows="2"></textarea></div><div class="form-actions"><button type="submit" class="btn-primary">Save Template</button><button type="button" class="btn-secondary modal-close">Cancel</button></div></form></div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
-    <!-- Scripts -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="./config.js"></script>
     <script src="./app.js"></script>
