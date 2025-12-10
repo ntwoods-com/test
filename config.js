@@ -6,7 +6,7 @@
 const CONFIG = {
     // Google Apps Script Web App URL
     // After deploying your Apps Script, paste the web app URL here
-    API_URL: 'https://script.google.com/macros/s/AKfycbwwYGeut92VPyJdKdzcUtDClQODnAOQ0KA7bjlk7hFg2aUMf__Ib041hY0dxZz98h5c/exec',
+    API_URL: 'https://script.google.com/macros/s/AKfycbxaa3vflzHa-2ZAWR1uWCiRpbTff5UepJsS-7dGKYF0TcDbNhFvEF9An08hfA9LhC8c/exec',
     
     // Google OAuth Client ID
     // Get this from Google Cloud Console
