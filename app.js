@@ -321,16 +321,36 @@ function renderRequirementsTable(requirements) {
             <td><span class="status-badge ${req.status.toLowerCase().replace(' ', '-')}">${req.status}</span></td>
             <td>${req.raisedBy}</td>
             <td>${formatDate(req.raisedDate)}</td>
-            <td>
-                <button class="btn-success" onclick="viewRequirement('${req.id}')">View</button>
-                ${canEdit('requirements') && currentUser.role === 'hr' ? `
-                    <button class="btn-primary" onclick="reviewRequirement('${req.id}')">Review</button>
-                ` : ''}
-                ${canEdit('requirements') && req.raisedBy === currentUser.email && req.status === 'Sent Back' ? `
-                    <button class="btn-warning" onclick="editRequirement('${req.id}')">Edit</button>
-                ` : ''}
-            </td>
+            <td class="action-buttons"></td>
         `;
+        
+        const actionsCell = row.querySelector('.action-buttons');
+        
+        // View button
+        const viewBtn = document.createElement('button');
+        viewBtn.className = 'btn-success';
+        viewBtn.textContent = 'View';
+        viewBtn.onclick = () => viewRequirement(req.id);
+        actionsCell.appendChild(viewBtn);
+        
+        // Review button for HR
+        if (canEdit('requirements') && currentUser.role === 'hr') {
+            const reviewBtn = document.createElement('button');
+            reviewBtn.className = 'btn-primary';
+            reviewBtn.textContent = 'Review';
+            reviewBtn.onclick = () => reviewRequirement(req.id);
+            actionsCell.appendChild(reviewBtn);
+        }
+        
+        // Edit button if sent back
+        if (canEdit('requirements') && req.raisedBy === currentUser.email && req.status === 'Sent Back') {
+            const editBtn = document.createElement('button');
+            editBtn.className = 'btn-warning';
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = () => editRequirement(req.id);
+            actionsCell.appendChild(editBtn);
+        }
+        
         tbody.appendChild(row);
     });
 }
@@ -370,20 +390,48 @@ function viewRequirement(reqId) {
             <label>Remark</label>
             <textarea class="form-control" readonly rows="2">${req.remark}</textarea>
         </div>` : ''}
-        <div class="form-actions">
-            ${currentUser.role === 'hr' && req.status !== 'Valid' && req.status !== 'Sent Back' ? `
-                <button class="btn-success" onclick="approveRequirement('${req.id}')">Approve</button>
-                <button class="btn-danger" onclick="sendBackRequirementModal('${req.id}')">Send Back</button>
-            ` : ''}
-            <button class="btn-secondary" onclick="closeModal('modalViewRequirement')">Close</button>
-            ${req.status === 'Valid' ? `
-                <button class="btn-primary" onclick="copyJobDetails('${req.id}')">Copy for Posting</button>
-            ` : ''}
-        </div>
     `;
     
     document.getElementById('requirementDetails').innerHTML = detailsHtml;
+    
+    // Add event listeners after HTML is inserted
+    const actionsHtml = document.createElement('div');
+    actionsHtml.className = 'form-actions';
+    
+    if (currentUser.role === 'hr' && req.status !== 'Valid' && req.status !== 'Sent Back') {
+        const approveBtn = document.createElement('button');
+        approveBtn.className = 'btn-success';
+        approveBtn.textContent = 'Approve';
+        approveBtn.onclick = () => approveRequirement(req.id);
+        actionsHtml.appendChild(approveBtn);
+        
+        const sendBackBtn = document.createElement('button');
+        sendBackBtn.className = 'btn-danger';
+        sendBackBtn.textContent = 'Send Back';
+        sendBackBtn.onclick = () => sendBackRequirementModal(req.id);
+        actionsHtml.appendChild(sendBackBtn);
+    }
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'btn-secondary';
+    closeBtn.textContent = 'Close';
+    closeBtn.onclick = () => closeModal('modalViewRequirement');
+    actionsHtml.appendChild(closeBtn);
+    
+    if (req.status === 'Valid') {
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'btn-primary';
+        copyBtn.textContent = 'Copy for Posting';
+        copyBtn.onclick = () => copyJobDetails(req.id);
+        actionsHtml.appendChild(copyBtn);
+    }
+    
+    document.getElementById('requirementDetails').appendChild(actionsHtml);
     openModal('modalViewRequirement');
+}
+
+function reviewRequirement(reqId) {
+    viewRequirement(reqId);
 }
 
 async function approveRequirement(reqId) {
@@ -395,6 +443,20 @@ async function approveRequirement(reqId) {
             requirementId: reqId,
             remark: 'Approved'
         });
+        
+        // Update in localStorage
+        const reqs = localStorage.getItem('hrms_requirements');
+        if (reqs) {
+            const requirements = JSON.parse(reqs);
+            const index = requirements.findIndex(r => r.id === reqId);
+            if (index !== -1) {
+                requirements[index].status = 'Valid';
+                requirements[index].remark = 'Approved';
+                requirements[index].reviewDate = new Date().toISOString();
+                localStorage.setItem('hrms_requirements', JSON.stringify(requirements));
+            }
+        }
+        
         showToast('Requirement approved successfully', 'success');
         closeModal('modalViewRequirement');
         await loadRequirements();
@@ -418,6 +480,20 @@ async function sendBackRequirement(reqId, remark) {
             requirementId: reqId,
             remark: remark
         });
+        
+        // Update in localStorage
+        const reqs = localStorage.getItem('hrms_requirements');
+        if (reqs) {
+            const requirements = JSON.parse(reqs);
+            const index = requirements.findIndex(r => r.id === reqId);
+            if (index !== -1) {
+                requirements[index].status = 'Sent Back';
+                requirements[index].remark = remark;
+                requirements[index].reviewDate = new Date().toISOString();
+                localStorage.setItem('hrms_requirements', JSON.stringify(requirements));
+            }
+        }
+        
         showToast('Requirement sent back successfully', 'success');
         closeModal('modalViewRequirement');
         await loadRequirements();
