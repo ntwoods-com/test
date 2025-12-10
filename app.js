@@ -1653,12 +1653,17 @@ function setupEventListeners() {
 async function apiCall(method, url) {
     try {
         const response = await fetch(url, { 
-            method: method,
-            mode: 'no-cors'
+            method: method
+            // Remove mode: 'no-cors' after backend is deployed
         });
         
-        // With no-cors, we can't read the response, so assume success
-        return { success: true };
+        const data = await response.json();
+        
+        if (data.statusCode !== 200) {
+            throw new Error(data.data.error || 'API Error');
+        }
+        
+        return data.data;
     } catch (error) {
         console.error('API Call Error:', error);
         throw error;
@@ -1669,7 +1674,7 @@ async function apiPost(action, payload) {
     try {
         const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
-            mode: 'no-cors',
+            // Remove mode: 'no-cors' after backend is deployed
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -1680,9 +1685,13 @@ async function apiPost(action, payload) {
             })
         });
         
-        // With no-cors mode, we can't read response
-        // Return success for now
-        return { success: true, data: {} };
+        const data = await response.json();
+        
+        if (data.statusCode !== 200) {
+            throw new Error(data.data.error || 'API Error');
+        }
+        
+        return data.data;
     } catch (error) {
         console.error('API Post Error:', error);
         throw error;
