@@ -139,13 +139,14 @@ async function loadMainApp() {
 async function loadPermissions() {
     try {
         const response = await apiCall('GET', `${CONFIG.API_URL}?action=getPermissions&role=${currentUser.role}`);
-        userPermissions = response.permissions;
+        userPermissions = response.permissions || {};
     } catch (error) {
         console.error('Error loading permissions:', error);
-        // Set default permissions for admin
-        if (currentUser.role === 'admin') {
-            userPermissions = getAllModulesPermissions();
-        }
+    }
+    
+    // Always set default permissions based on role
+    if (!userPermissions || Object.keys(userPermissions).length === 0) {
+        userPermissions = getAllModulesPermissions();
     }
 }
 
@@ -164,11 +165,17 @@ function setupMenu() {
     
     menuItems.forEach(item => {
         const module = item.getAttribute('data-module');
-        const permission = userPermissions[module];
         
-        // Hide menu items without view permission
-        if (!permission || !permission.view) {
-            item.style.display = 'none';
+        // Ensure userPermissions exists and has module data
+        if (!userPermissions || !userPermissions[module]) {
+            // For admin or if permissions not loaded, show all
+            item.style.display = 'block';
+        } else {
+            const permission = userPermissions[module];
+            // Hide menu items without view permission
+            if (!permission || !permission.view) {
+                item.style.display = 'none';
+            }
         }
         
         item.addEventListener('click', () => {
