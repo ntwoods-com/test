@@ -1652,12 +1652,17 @@ function setupEventListeners() {
 // ==================== API FUNCTIONS ====================
 async function apiCall(method, url) {
     try {
+        console.log('API Call:', method, url);
+        
         const response = await fetch(url, { 
             method: method
             // Remove mode: 'no-cors' after backend is deployed
         });
         
+        console.log('Response status:', response.status);
+        
         const data = await response.json();
+        console.log('Response data:', data);
         
         if (data.statusCode !== 200) {
             throw new Error(data.data.error || 'API Error');
@@ -1666,36 +1671,54 @@ async function apiCall(method, url) {
         return data.data;
     } catch (error) {
         console.error('API Call Error:', error);
+        console.error('Error details:', error.message, error.stack);
         throw error;
     }
 }
 
 async function apiPost(action, payload) {
     try {
-        await fetch(CONFIG.API_URL, {
+        console.log('API Post:', action);
+        console.log('Payload:', payload);
+        console.log('API URL:', CONFIG.API_URL);
+        
+        const requestBody = {
+            action: action,
+            userEmail: currentUser?.email || 'unknown@example.com',
+            ...payload
+        };
+        
+        console.log('Request body:', requestBody);
+        
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
-            mode: 'no-cors',   // opaque response
+            // Remove mode: 'no-cors' after backend is deployed
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                action: action,
-                userEmail: currentUser.email,
-                ...payload
-            })
+            body: JSON.stringify(requestBody)
         });
-
-        // no-cors me response body read nahi hoti, toh hum assume karenge POST successful hai
-        return { status: "sent" };
-
+        
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (data.statusCode !== 200) {
+            throw new Error(data.data.error || 'API Error');
+        }
+        
+        return data.data;
     } catch (error) {
-        console.error("API Post Error:", error);
-        // tu chahe toh error ko bhi suppress kar sakta hai:
-        // return { status: "sent" };
+        console.error('API Post Error:', error);
+        console.error('Error details:', error.message, error.stack);
+        
+        // Show user-friendly error
+        showToast('Backend error: ' + error.message, 'error');
         throw error;
     }
 }
-
 
 // ==================== UTILITY FUNCTIONS ====================
 function showLoading() {
