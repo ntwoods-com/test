@@ -37,21 +37,45 @@ function showLoginPage() {
     document.getElementById('loginPage').style.display = 'flex';
     document.getElementById('mainApp').style.display = 'none';
     
-    // Initialize Google Sign-In
-    google.accounts.id.initialize({
-        client_id: CONFIG.GOOGLE_CLIENT_ID,
-        callback: handleGoogleSignIn
-    });
-    
-    google.accounts.id.renderButton(
-        document.getElementById('googleSignInButton'),
-        { 
-            theme: 'outline', 
-            size: 'large',
-            text: 'signin_with',
-            width: 300
-        }
-    );
+    // Wait for Google Sign-In library to load
+    if (typeof google !== 'undefined' && google.accounts) {
+        initializeGoogleSignIn();
+    } else {
+        // Wait for library to load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (typeof google !== 'undefined' && google.accounts) {
+                    initializeGoogleSignIn();
+                } else {
+                    console.error('Google Sign-In library failed to load');
+                    showToast('Failed to load Google Sign-In. Please refresh the page.', 'error');
+                }
+            }, 1000);
+        });
+    }
+}
+
+function initializeGoogleSignIn() {
+    try {
+        // Initialize Google Sign-In
+        google.accounts.id.initialize({
+            client_id: CONFIG.GOOGLE_CLIENT_ID,
+            callback: handleGoogleSignIn
+        });
+        
+        google.accounts.id.renderButton(
+            document.getElementById('googleSignInButton'),
+            { 
+                theme: 'outline', 
+                size: 'large',
+                text: 'signin_with',
+                width: 300
+            }
+        );
+    } catch (error) {
+        console.error('Error initializing Google Sign-In:', error);
+        showToast('Error initializing login. Please refresh the page.', 'error');
+    }
 }
 
 async function handleGoogleSignIn(response) {
